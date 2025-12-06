@@ -16,7 +16,7 @@ class LabelImageCell: UICollectionViewCell {
 
     let movieImage: UIImageView = {
         let l = UIImageView()
-        l.contentMode = .scaleAspectFit
+        l.contentMode = .scaleAspectFill
         l.translatesAutoresizingMaskIntoConstraints = false
         l.layer.masksToBounds = true
         l.layer.cornerRadius = 12
@@ -25,11 +25,12 @@ class LabelImageCell: UICollectionViewCell {
     let movieName: UILabel = {
         let l = UILabel()
         l.numberOfLines = 0
-        l.textAlignment = .left
+        l.textAlignment = .center
         l.translatesAutoresizingMaskIntoConstraints = false
-//        l.lineBreakMode = .byWordWrapping
+//        l.backgroundColor = .yellow
         return l
     }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureConstrains()
@@ -40,7 +41,6 @@ class LabelImageCell: UICollectionViewCell {
     }
 
     func configureCell(model: LabelImageProtocol) {
-
         let path = model.imageURL
         let fullUrl = "https://image.tmdb.org/t/p/original\(path)"
 
@@ -49,7 +49,6 @@ class LabelImageCell: UICollectionViewCell {
                 self.movieImage.image = response.image
             }
         }
-
         self.movieName.text = model.titleText
     }
 
@@ -70,12 +69,10 @@ class LabelImageCell: UICollectionViewCell {
                 ),
             movieImage.heightAnchor.constraint(equalToConstant: 240),
             movieName.leadingAnchor
-                .constraint(equalTo: contentView.leadingAnchor),
+                .constraint(equalTo: movieImage.leadingAnchor),
             movieName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             movieName.trailingAnchor
                 .constraint(equalTo: movieImage.trailingAnchor)
-//            movieName.heightAnchor.constraint(equalToConstant: 24)
-
         ])
     }
 }

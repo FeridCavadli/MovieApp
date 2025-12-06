@@ -65,6 +65,7 @@ class HomeCell: UICollectionViewCell {
             print(errorMessage)
         }
     }
+
     func configureCell(model: HomeModel) {
         movieType.text = model.title
         self.items = model.result

@@ -1,0 +1,110 @@
+//
+//  Actor.swift
+//  MovieApp
+//
+//  Created by Ferid on 06.12.25.
+//
+
+import Foundation
+
+// MARK: - Actor
+struct Actors: Codable {
+    let page: Int?
+    let results: [ActorResult]?
+    let totalPages, totalResults: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case page, results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
+}
+
+// MARK: - Result
+struct ActorResult: Codable, LabelImageProtocol {
+    var titleText: String {
+        return name ?? ""
+    }
+
+    var imageURL: String {
+        return profilePath ?? ""
+    }
+
+    let adult: Bool?
+    let gender, id: Int?
+    let knownForDepartment: KnownForDepartment?
+    let name, originalName: String?
+    let popularity: Double?
+    let profilePath: String?
+    let knownFor: [KnownFor]?
+
+    enum CodingKeys: String, CodingKey {
+        case adult, gender, id
+        case knownForDepartment = "known_for_department"
+        case name
+        case originalName = "original_name"
+        case popularity
+        case profilePath = "profile_path"
+        case knownFor = "known_for"
+    }
+}
+
+// MARK: - KnownFor
+struct KnownFor: Codable {
+    let adult: Bool?
+    let backdropPath: String?
+    let id: Int?
+    let name, originalName, overview: String?
+    let posterPath: String?
+    let mediaType: MediaType?
+    let originalLanguage: OriginalLanguage?
+    let genreIDS: [Int]?
+    let popularity: Double?
+    let firstAirDate: String?
+    let voteAverage: Double?
+    let voteCount: Int?
+    let originCountry: [OriginCountry]?
+    let title, originalTitle, releaseDate: String?
+    let video: Bool?
+
+    enum CodingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case id, name
+        case originalName = "original_name"
+        case overview
+        case posterPath = "poster_path"
+        case mediaType = "media_type"
+        case originalLanguage = "original_language"
+        case genreIDS = "genre_ids"
+        case popularity
+        case firstAirDate = "first_air_date"
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+        case originCountry = "origin_country"
+        case title
+        case originalTitle = "original_title"
+        case releaseDate = "release_date"
+        case video
+    }
+}
+
+enum MediaType: String, Codable {
+    case movie = "movie"
+    case tv = "tv"
+}
+
+enum OriginCountry: String, Codable {
+    case ca = "CA"
+    case no = "NO"
+    case us = "US"
+}
+
+enum OriginalLanguage: String, Codable {
+    case en = "en"
+    case no = "no"
+}
+
+enum KnownForDepartment: String, Codable {
+    case acting = "Acting"
+}

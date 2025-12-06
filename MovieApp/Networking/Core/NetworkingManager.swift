@@ -29,18 +29,4 @@ class NetworkingManager {
         }
     }
 
-    func imageRequest(urlString: String ,completion: @escaping ((UIImage?) -> Void)) {
-        AF.request(urlString).responseData { response in
-            switch response.result {
-            case .success(let data):
-                print("Image created successfully")
-                if let image = UIImage(data: data) {
-                    completion(image)
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-
 }

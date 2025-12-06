@@ -22,7 +22,8 @@ class NetworkingHelper {
         case popular
         case topRated
         case upcoming
-        
+        case personPopular
+
         var endpoint: String {
             switch self {
             case .nowPlaying:
@@ -31,17 +32,17 @@ class NetworkingHelper {
                 return "movie/popular"
             case .topRated:
                 return "movie/top_rated"
-            default:
+            case .upcoming:
                 return "movie/upcoming"
+            default:
+                return "person/popular"
             }
         }
-        
+
         var base: String {
-            return "https://api.themoviedb.org/3/"
+                return "https://api.themoviedb.org/3/"
         }
-        var imageBAse: String {
-            "https://image.tmdb.org/t/p/original"
-        }
+
         var fullUrl: String {
             return base + endpoint
         }
