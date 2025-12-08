@@ -11,10 +11,14 @@ import Foundation
 class ActorMoviesManager: ActorMoviesUseCase {
     let manager = NetworkingManager()
 
-    func getActorMovies(actorId: Int, completion: @escaping ((ActorMovies?, String?) -> Void)) {
+    func getActorMovies(
+        actorId: Int,
+        completion: @escaping ((MovieCredit?, String?) -> Void)
+    ) {
         let url = NetworkingHelper.shared.configureActorMoviesUrl(
             endpoint: ActorMoviesEndpoint.actorMovies(actorId: actorId).path
         )
-        manager.request(model: ActorMovies.self, url: url, completion: completion)
+        manager
+            .request(model: MovieCredit.self, url: url, completion: completion)
     }
 }

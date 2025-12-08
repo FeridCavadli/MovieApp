@@ -13,7 +13,7 @@ class ActorMoviesVM {
     let manager = ActorMoviesManager()
 //        let manager = ActorMockManager()
 
-    var items: [Cast] = []
+    var items: [MovieResult] = []
     var id: Int
 
     init(id: Int) {
@@ -29,7 +29,7 @@ class ActorMoviesVM {
                 self.error?(error)
             } else if let actorM = actorM {
                 self.success?()
-                self.items = actorM.crew ?? []
+                self.items = actorM.cast
             }
         }
     }

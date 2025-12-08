@@ -25,8 +25,15 @@ class HomeCell: UICollectionViewCell {
 
     let buttom: UIButton = {
         let b = UIButton()
-        b.backgroundColor = .green
-        b.titleLabel?.text = "salam"
+        b.setTitleColor(.blue, for: .normal)
+        b.setTitle("See all", for: .normal)
+        b.addTarget(
+                HomeCell.self,
+                action: #selector(seeAll),
+                for: .touchUpInside
+            )
+        b.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        b.semanticContentAttribute = .forceRightToLeft
         b.translatesAutoresizingMaskIntoConstraints = false
         return b
     }()
@@ -41,6 +48,10 @@ class HomeCell: UICollectionViewCell {
         c.translatesAutoresizingMaskIntoConstraints = false
         return c
     }()
+
+    @objc func seeAll() {
+        
+    }
 
     override init(frame: CGRect) { 
         super.init(frame: frame)
