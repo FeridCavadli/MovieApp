@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Actor
 struct Actors: Codable {
     let page: Int?
     let results: [ActorResult]?
@@ -23,11 +22,11 @@ struct Actors: Codable {
 // MARK: - Result
 struct ActorResult: Codable, LabelImageProtocol {
     var titleText: String {
-        return name ?? ""
+        name ?? ""
     }
 
     var imageURL: String {
-        return profilePath ?? ""
+        profilePath ?? ""
     }
 
     let adult: Bool?
@@ -54,8 +53,7 @@ struct KnownFor: Codable {
     let adult: Bool?
     let backdropPath: String?
     let id: Int?
-    let name, originalName, overview: String?
-    let posterPath: String?
+    let name, originalName, overview, posterPath: String?
     let mediaType: MediaType?
     let originalLanguage: OriginalLanguage?
     let genreIDS: [Int]?
@@ -96,13 +94,18 @@ enum MediaType: String, Codable {
 
 enum OriginCountry: String, Codable {
     case ca = "CA"
+    case cn = "CN"
     case no = "NO"
     case us = "US"
 }
 
 enum OriginalLanguage: String, Codable {
+    case de = "de"
     case en = "en"
+    case es = "es"
+    case it = "it"
     case no = "no"
+    case zh = "zh"
 }
 
 enum KnownForDepartment: String, Codable {

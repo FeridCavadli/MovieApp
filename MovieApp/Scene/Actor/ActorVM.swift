@@ -9,20 +9,22 @@ import Foundation
 
 class ActorVM {
 
-//    let manager = NetworkingManager()
     let manager = ActorManager()
+//    let manager = ActorMockManager()
+
     var items: [ActorResult] = []
 
     var success: (() -> Void)?
     var error: ((String) -> Void)?
 
     func getActors() {
-        manager.getActors(endpoint: .personPopular) { actor, error in
+        manager.getActors { actor, error in
             if let error = error {
                 self.error?(error)
             } else if let actor = actor {
                 self.success?()
                 self.items = actor.results ?? []
+                print(actor.results ?? "")
             }
         }
     }

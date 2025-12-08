@@ -1,16 +1,25 @@
 //
-//  ActorController.swift
+//  ActorMoviesController.swift
 //  MovieApp
 //
-//  Created by Ferid on 06.12.25.
+//  Created by Ferid on 07.12.25.
 //
 
 import UIKit
 
-class ActorController: UIViewController {
+class ActorMoviesController: UIViewController {
 
-    let vm = ActorVM()
-    
+    var vm: ActorMoviesVM
+
+    init(vm: ActorMoviesVM) {
+        self.vm = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
         l.scrollDirection = .vertical
@@ -33,11 +42,11 @@ class ActorController: UIViewController {
             )
         configureConstrains()
         configureViewModel()
-        navigationItem.title = "Actors"
+        navigationItem.title = "Actor Movies"
     }
 
     func configureViewModel() {
-        vm.getActors()
+        vm.getActorMovies()
         vm.success = {
             self.collection.reloadData()
         }
@@ -59,7 +68,7 @@ class ActorController: UIViewController {
     }
 }
 
-extension ActorController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ActorMoviesController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         vm.items.count
     }
@@ -79,3 +88,4 @@ extension ActorController: UICollectionViewDelegate, UICollectionViewDataSource,
         return .init(width: width, height: 272)
     }
 }
+

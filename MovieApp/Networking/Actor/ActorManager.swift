@@ -6,21 +6,22 @@
 //
 
 import Foundation
-import Alamofire
 
-class ActorManager {
+
+class ActorManager: ActorUseCase {
 
     let manager = NetworkingManager()
 
     func getActors(
-        endpoint: BaseUrl,
         completion: @escaping ((Actors?, String?) -> Void)
     ) {
+        let url = NetworkingHelper.shared.configureActorUrl(
+            endpoint: ActorEnpoint.popularActors.rawValue
+        )
         manager
             .request(
                 model: Actors.self,
-                endpoint: endpoint,
-                method: .get,
+                url: url,
                 completion: completion
             )
     }

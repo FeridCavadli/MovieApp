@@ -41,7 +41,7 @@ class LabelImageCell: UICollectionViewCell {
     }
 
     func configureCell(model: LabelImageProtocol) {
-        let path = model.imageURL
+        let path = model.imageURL 
         let fullUrl = "https://image.tmdb.org/t/p/original\(path)"
 
         movieImage.downloadImage(from: fullUrl) { response in

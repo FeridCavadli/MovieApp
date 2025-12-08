@@ -7,14 +7,14 @@
 
 import Foundation
 import Alamofire
-import UIKit
+
 
 class NetworkingManager {
     func request<T: Codable>(model: T.Type,
-                             endpoint: BaseUrl,
-                             method: HTTPMethod,
+                             url: String,
+                             method: HTTPMethod = .get,
                              completion: @escaping ((T?, String?) -> Void)) {
-        AF.request(endpoint.fullUrl,
+        AF.request(url,
                    method: method,
                    encoding: JSONEncoding.default,
                    headers: NetworkingHelper.shared.headers).responseDecodable(
