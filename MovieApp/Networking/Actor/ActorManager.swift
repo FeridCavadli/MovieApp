@@ -13,11 +13,13 @@ class ActorManager: ActorUseCase {
     let manager = NetworkingManager()
 
     func getActors(
+        page: Int,
         completion: @escaping ((Actors?, String?) -> Void)
     ) {
         let url = NetworkingHelper.shared.configureActorUrl(
-            endpoint: ActorEnpoint.popularActors.rawValue
+            endpoint: ActorEnpoint.popularActors(page: page).path
         )
+        print(url)
         manager
             .request(
                 model: Actors.self,

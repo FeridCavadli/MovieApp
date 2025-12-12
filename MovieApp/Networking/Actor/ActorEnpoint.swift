@@ -7,6 +7,13 @@
 
 import Foundation
 
-enum ActorEnpoint: String {
-    case popularActors = "person/popular"
+enum ActorEnpoint {
+    case popularActors(page: Int)
+
+    var path: String {
+        switch self {
+        case .popularActors(let page):
+            return "person/popular?page=\(page)"
+        }
+    }
 }

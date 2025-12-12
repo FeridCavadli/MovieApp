@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Actor
 struct Actors: Codable {
     let page: Int?
     let results: [ActorResult]?
@@ -28,10 +29,10 @@ struct ActorResult: Codable, LabelImageProtocol {
     var imageURL: String {
         profilePath ?? ""
     }
-
+    
     let adult: Bool?
     let gender, id: Int?
-    let knownForDepartment: KnownForDepartment?
+    let knownForDepartment: String?
     let name, originalName: String?
     let popularity: Double?
     let profilePath: String?
@@ -54,14 +55,14 @@ struct KnownFor: Codable {
     let backdropPath: String?
     let id: Int?
     let name, originalName, overview, posterPath: String?
-    let mediaType: MediaType?
-    let originalLanguage: OriginalLanguage?
+    let mediaType: String?
+    let originalLanguage: String?
     let genreIDS: [Int]?
     let popularity: Double?
     let firstAirDate: String?
     let voteAverage: Double?
     let voteCount: Int?
-    let originCountry: [OriginCountry]?
+    let originCountry: [String]?
     let title, originalTitle, releaseDate: String?
     let video: Bool?
 
@@ -87,27 +88,28 @@ struct KnownFor: Codable {
     }
 }
 
-enum MediaType: String, Codable {
-    case movie = "movie"
-    case tv = "tv"
-}
+//enum MediaType: String, Codable {
+//    case movie
+//    case tv
+//}
 
-enum OriginCountry: String, Codable {
-    case ca = "CA"
-    case cn = "CN"
-    case no = "NO"
-    case us = "US"
-}
+//enum OriginCountry: String, Codable {
+//    case cn = "CN"
+//    case no = "NO"
+//    case us = "US"
+//}
+//
+//enum OriginalLanguage: String, Codable {
+//    case en = "en"
+//    case es = "es"
+//    case no = "no"
+//    case zh = "zh"
+//}
 
-enum OriginalLanguage: String, Codable {
-    case de = "de"
-    case en = "en"
-    case es = "es"
-    case it = "it"
-    case no = "no"
-    case zh = "zh"
-}
+//enum KnownForDepartment: String, Codable {
+//    case acting = "Acting"
+//    case directing = "Directing"
+//}
 
-enum KnownForDepartment: String, Codable {
-    case acting = "Acting"
-}
+
+

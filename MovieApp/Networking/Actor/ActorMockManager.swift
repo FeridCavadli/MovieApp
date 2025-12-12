@@ -9,10 +9,10 @@ import Foundation
 
 
 class ActorMockManager: ActorUseCase {
-
-    
-    func getActors(completion: @escaping ((Actors?, String?) -> Void)) {
-
+    func getActors(
+        page: Int,
+        completion: @escaping ((Actors?, String?) -> Void)
+    ) {
         guard let url = Bundle.main.url(forResource: "ActorMockData", withExtension: "json") else {return }
         do {
             let data = try Data(contentsOf: url)

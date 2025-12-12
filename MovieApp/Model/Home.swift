@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Movie
 
-struct HomeModel  {
+struct HomeModel {
     var title: String
     var result: [MovieResult]
 }

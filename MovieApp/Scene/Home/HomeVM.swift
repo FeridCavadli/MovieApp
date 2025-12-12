@@ -18,65 +18,24 @@ final class HomeVM {
 
 
     func getMovies() {
-        getPlayingMovies()
-        getPopularMovies()
-        getTopRatedMovies()
-        getUpcomingMovies()
+        getCategory(endpoint: .popular, title: "Popular")
+        getCategory(endpoint: .topRated, title: "Top rated")
+        getCategory(endpoint: .nowPlaying, title: "Now playing")
+        getCategory(endpoint: .upcoming, title: "Upcoming")
     }
 
-    func getPopularMovies() {
+    func getCategory(endpoint: HomeEndpoint, title: String) {
         manager
             .getHomeItems(
-                endpoint: HomeEndpoint.popular
+                endpoint: endpoint
             ) { movie, errorMessage in
                 if let errorMessage = errorMessage {
                     self.error?(errorMessage)
                 } else if let movie = movie {
                     self.success?()
-                    self.items.append(.init(title: "Popular", result: movie.results ?? []))
+                    self.items.append(.init(title: title, result: movie.results ?? []))
                 }
             }
-    }
-    func getPlayingMovies() {
-        manager
-            .getHomeItems(
-                endpoint: HomeEndpoint.topRated
-            ) { movie, errorMessage in
-                if let errorMessage = errorMessage {
-                    self.error?(errorMessage)
-                } else if let movie = movie {
-                    self.success?()
-                    self.items.append(.init(title: "Top rated", result: movie.results ?? []))
-            }
-        }
-    }
-
-    func getTopRatedMovies() {
-        manager
-            .getHomeItems(
-                endpoint: HomeEndpoint.nowPlaying
-            ) { movie, errorMessage in
-                if let errorMessage = errorMessage {
-                    self.error?(errorMessage)
-                } else if let movie = movie {
-                    self.success?()
-                    self.items.append(.init(title: "Now playing", result: movie.results ?? []))
-            }
-        }
-    }
-
-    func getUpcomingMovies() {
-        manager
-            .getHomeItems(
-                endpoint: HomeEndpoint.upcoming
-            ) { movie, errorMessage in
-                if let errorMessage = errorMessage {
-                    self.error?(errorMessage)
-                } else if let movie = movie {
-                    self.success?()
-                    self.items.append(.init(title: "Upcoming", result: movie.results ?? []))
-            }
-        }
     }
 }
 

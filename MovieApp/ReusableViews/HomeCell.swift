@@ -14,6 +14,9 @@ class HomeCell: UICollectionViewCell {
 
     var items: [MovieResult] = []
 
+    var onTap: (() -> Void)?
+
+
 
     let movieType: UILabel = {
         let l = UILabel()
@@ -23,15 +26,10 @@ class HomeCell: UICollectionViewCell {
         return l
     }()
 
-    let buttom: UIButton = {
+    let button: UIButton = {
         let b = UIButton()
         b.setTitleColor(.blue, for: .normal)
         b.setTitle("See all", for: .normal)
-        b.addTarget(
-                HomeCell.self,
-                action: #selector(seeAll),
-                for: .touchUpInside
-            )
         b.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         b.semanticContentAttribute = .forceRightToLeft
         b.translatesAutoresizingMaskIntoConstraints = false
@@ -50,11 +48,16 @@ class HomeCell: UICollectionViewCell {
     }()
 
     @objc func seeAll() {
-        
+        onTap?()
     }
 
     override init(frame: CGRect) { 
         super.init(frame: frame)
+        button.addTarget(
+                self,
+                action: #selector(seeAll),
+                for: .touchUpInside
+            )
         configureConstrains()
         cellCollection.dataSource = self
         cellCollection.delegate = self
@@ -86,14 +89,14 @@ class HomeCell: UICollectionViewCell {
 
     func configureConstrains() {
         contentView.addSubview(movieType)
-        contentView.addSubview(buttom)
+        contentView.addSubview(button)
         contentView.addSubview(cellCollection)
         NSLayoutConstraint.activate([
             movieType.topAnchor.constraint(equalTo: contentView.topAnchor),
             movieType.leadingAnchor
                 .constraint(equalTo: contentView.leadingAnchor, constant: 32),
-            buttom.topAnchor.constraint(equalTo: contentView.topAnchor),
-            buttom.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            button.topAnchor.constraint(equalTo: contentView.topAnchor),
+            button.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             cellCollection.topAnchor
                 .constraint(equalTo: movieType.bottomAnchor, constant: 16),
             cellCollection.leadingAnchor

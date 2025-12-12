@@ -1,52 +1,48 @@
 //
-//  HomeController.swift
+//  MovieController.swift
 //  MovieApp
 //
-//  Created by Ferid on 30.11.25.
+//  Created by Ferid on 12.12.25.
 //
 
 import UIKit
 
-class HomeController: UIViewController {
+class MovieController: UIViewController {
 
+
+    let vm: MovieVM
+    init(vm: MovieVM) {
+        self.vm = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
         l.scrollDirection = .vertical
-        l.minimumLineSpacing = 30
-        l.minimumInteritemSpacing = 0
+        l.minimumLineSpacing = 15
+        l.minimumInteritemSpacing = 15
+        l.sectionInset = .init(top: 0, left: 15, bottom: 0, right: 15)
         let c = UICollectionView(frame: .zero, collectionViewLayout: l)
         c.translatesAutoresizingMaskIntoConstraints = false
         return c
     }()
-
-
-    let viewModel = HomeVM()
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
-        view.backgroundColor = .white
-        collection.delegate = self
         collection.dataSource = self
-        collection.register(HomeCell.self, forCellWithReuseIdentifier: "HomeCell")
+        collection.delegate = self
+        collection
+            .register(
+                LabelImageCell.self,
+                forCellWithReuseIdentifier: "LabelImageCell"
+            )
         configureConstrains()
         configureViewModel()
-        navigationItem.title = "Home"
+        navigationItem.title = "Movies"
     }
-
-    func configureViewModel() {
-        viewModel.getMovies()
-        viewModel.success = {
-            self.collection.reloadData()
-        }
-        viewModel.error = { errorMessage in
-            print(errorMessage)
-        }
-    }
-
 
     func configureConstrains() {
         view.addSubview(collection)
@@ -58,32 +54,35 @@ class HomeController: UIViewController {
                 .constraint(equalTo: view.trailingAnchor)
         ])
     }
+
+    func configureViewModel() {
+        vm.getMovies()
+        vm.error = { error in
+            print(error)
+        }
+        vm.success = {
+            self.collection.reloadData()
+        }
+
+    }
 }
 
-extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MovieController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.items.count
-
+        vm.items.result.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collection.dequeueReusableCell(
-            withReuseIdentifier: "HomeCell",
-            for: indexPath
-        ) as! HomeCell
-        
-        let model = viewModel.items[indexPath.row]
+            withReuseIdentifier: "LabelImageCell",
+            for: indexPath) as! LabelImageCell
+        let model = vm.items.result[indexPath.row]
         cell.configureCell(model: model)
-
-        cell.onTap = {
-            let controller = MovieController(vm: .init(items: model))
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collection.bounds.width
-        return .init(width: width, height: 318)
+        let width = (collection.bounds.width - 45) / 2
+        return .init(width: width, height: 272)
     }
 }

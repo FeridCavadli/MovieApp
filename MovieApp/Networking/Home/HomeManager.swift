@@ -23,6 +23,5 @@ class HomeManager: HomeUseCase{
                 url: url,
                 completion: completion
             )
-
     }
 }

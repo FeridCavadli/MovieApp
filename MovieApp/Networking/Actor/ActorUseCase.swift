@@ -9,6 +9,7 @@ import Foundation
 
 protocol ActorUseCase {
     func getActors(
+        page: Int,
         completion: @escaping ((Actors?, String?) -> Void)
     )
 }

@@ -10,7 +10,9 @@ import UIKit
 class ActorController: UIViewController {
 
     let vm = ActorVM()
-    
+
+    let refresh = UIRefreshControl()
+
     var collection: UICollectionView = {
         let l = UICollectionViewFlowLayout()
         l.scrollDirection = .vertical
@@ -31,18 +33,32 @@ class ActorController: UIViewController {
                 LabelImageCell.self,
                 forCellWithReuseIdentifier: "LabelImageCell"
             )
+        collection.refreshControl = refresh
+        refresh
+            .addTarget(
+                self,
+                action: #selector(refreshPage),
+                for: .valueChanged
+            )
         configureConstrains()
         configureViewModel()
         navigationItem.title = "Actors"
+    }
+
+    @objc func refreshPage() {
+        print("refresh")
+        vm.reset()
     }
 
     func configureViewModel() {
         vm.getActors()
         vm.success = {
             self.collection.reloadData()
+            self.refresh.endRefreshing()
         }
         vm.error = { errorMessage in
             print(errorMessage)
+            self.refresh.endRefreshing()
         }
     }
 
@@ -81,6 +97,19 @@ extension ActorController: UICollectionViewDelegate, UICollectionViewDataSource,
         let model = vm.items[indexPath.row]
         let controller = ActorMoviesController(vm: .init(id: model.id ?? 0))
         navigationController?.pushViewController(controller, animated: true)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        vm.pagination(index: indexPath.item)
+        print("will display")
+        print("current index: \(indexPath.item)")
+       
+
+
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
