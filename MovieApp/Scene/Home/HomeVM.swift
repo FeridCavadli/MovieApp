@@ -27,13 +27,23 @@ final class HomeVM {
     func getCategory(endpoint: HomeEndpoint, title: String) {
         manager
             .getHomeItems(
+                title: title,
                 endpoint: endpoint
-            ) { movie, errorMessage in
+            ) {
+ movie,
+ errorMessage in
                 if let errorMessage = errorMessage {
                     self.error?(errorMessage)
                 } else if let movie = movie {
                     self.success?()
-                    self.items.append(.init(title: title, result: movie.results ?? []))
+                    self.items
+                        .append(
+                            .init(
+                                title: title,
+                                result: movie.results ?? [],
+                                category: endpoint
+                            )
+                        )
                 }
             }
     }

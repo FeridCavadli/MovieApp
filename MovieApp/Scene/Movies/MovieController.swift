@@ -30,6 +30,7 @@ class MovieController: UIViewController {
         c.translatesAutoresizingMaskIntoConstraints = false
         return c
     }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collection.dataSource = self
@@ -41,7 +42,7 @@ class MovieController: UIViewController {
             )
         configureConstrains()
         configureViewModel()
-        navigationItem.title = "Movies"
+        navigationItem.title = vm.category.title
     }
 
     func configureConstrains() {
@@ -69,16 +70,25 @@ class MovieController: UIViewController {
 
 extension MovieController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        vm.items.result.count
+        vm.items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collection.dequeueReusableCell(
             withReuseIdentifier: "LabelImageCell",
             for: indexPath) as! LabelImageCell
-        let model = vm.items.result[indexPath.row]
+        let model = vm.items[indexPath.row]
         cell.configureCell(model: model)
         return cell
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let model = vm.items[indexPath.row]
+        let controller = MovieDetailsController(vm: .init(id: model.id ?? 0))
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

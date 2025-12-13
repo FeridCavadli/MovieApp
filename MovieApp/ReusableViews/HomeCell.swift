@@ -8,6 +8,8 @@
 import UIKit
 
 
+
+
 class HomeCell: UICollectionViewCell {
 
     let viewModel = HomeVM()
@@ -15,6 +17,8 @@ class HomeCell: UICollectionViewCell {
     var items: [MovieResult] = []
 
     var onTap: (() -> Void)?
+
+    var onTapToDetails: ((MovieDetailsController) -> Void)?
 
 
 
@@ -124,6 +128,14 @@ extension HomeCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         return cell
     }
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let model = items[indexPath.row]
+        let controller = MovieDetailsController(vm: .init(id: model.id ?? 0))
+        self.onTapToDetails?(controller)
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: 167, height: 272)
     }

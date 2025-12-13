@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomeUseCase {
     func getHomeItems(
+        title: String,
         endpoint: HomeEndpoint,
         completion: @escaping ((Movie?, String?) -> Void)
     ) 

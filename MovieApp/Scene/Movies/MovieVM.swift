@@ -10,21 +10,25 @@ import Foundation
 class MovieVM {
 
     let manager = HomeManager()
-    var items: HomeModel
+    var items: [MovieResult] = []
 
-    init(items: HomeModel) {
-        self.items = items
+    var category: HomeEndpoint
+
+    init(category: HomeEndpoint) {
+        self.category = category
     }
 
     var success: (() -> Void)?
     var error: ((String) -> Void)?
 
-    func getMovies(endpoint: HomeEndpoint) {
-        manager.getHomeItems(title: String, endpoint: endpoint) { movie, error in
+    func getMovies() {
+        manager.getHomeItems(title: category.rawValue, endpoint: category) {
+            movie,
+            error in
             if let error = error {
                 self.error?(error)
             } else if let movie = movie {
-                self.items = .init(title: title, result: movie.results)
+                self.items = movie.results ?? []
                 self.success?()
             }
         }

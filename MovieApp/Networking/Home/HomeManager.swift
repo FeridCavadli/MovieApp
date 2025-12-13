@@ -12,6 +12,7 @@ class HomeManager: HomeUseCase{
     let manager = NetworkingManager()
 
     func getHomeItems(
+        title: String,
         endpoint: HomeEndpoint,
         completion: @escaping ((Movie?, String?) -> Void)
     ) {

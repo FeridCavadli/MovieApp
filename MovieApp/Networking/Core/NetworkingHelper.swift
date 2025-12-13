@@ -31,6 +31,11 @@ class NetworkingHelper {
         return base + endpoint
     }
 
+    func configureMovieDetails(endpoint: String) -> String {
+        let base = "https://api.themoviedb.org/3/"
+        return base + endpoint
+    }
+
 }
 
 

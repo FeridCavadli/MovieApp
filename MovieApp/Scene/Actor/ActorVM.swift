@@ -14,6 +14,7 @@ class ActorVM {
 
 
     var data: Actors?
+    
     var items: [ActorResult] = []
 
     var success: (() -> Void)?

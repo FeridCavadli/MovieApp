@@ -12,6 +12,7 @@ import Foundation
 struct HomeModel {
     var title: String
     var result: [MovieResult]
+    var category: HomeEndpoint
 }
 
 struct Movie: Codable {

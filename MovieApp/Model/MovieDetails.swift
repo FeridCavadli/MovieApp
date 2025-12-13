@@ -8,7 +8,15 @@
 
 
 // MARK: - Actor
-struct ForActor: Codable {
+struct MovieDetails: Codable, LabelImageProtocol {
+    var titleText: String {
+        title ?? ""
+    }
+
+    var imageURL: String {
+        posterPath ?? ""
+    }
+
     let adult: Bool?
     let backdropPath: String?
     let belongsToCollection: BelongsToCollection?

@@ -14,7 +14,16 @@ enum HomeEndpoint: String {
     case upcoming = "movie/upcoming"
 
 
-//    var path: String {
-//        return NetworkingHelper.shared.configureHomeUrl(endpoint: self.rawValue)
-//    }
+    var title: String {
+        switch self {
+        case .nowPlaying:
+            return "Now Playing"
+        case .popular:
+            return "Popular"
+        case .topRated:
+            return "Top Rated"
+        case .upcoming:
+            return "Upcoming"
+        }
+    }
 }

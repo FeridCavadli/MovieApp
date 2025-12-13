@@ -76,11 +76,27 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.configureCell(model: model)
 
         cell.onTap = {
-            let controller = MovieController(vm: .init(items: model))
+            let controller = MovieController(vm: .init(category: model.category))
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+        cell.onTapToDetails = { controller in
             self.navigationController?.pushViewController(controller, animated: true)
         }
         return cell
     }
+
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        didSelectItemAt indexPath: IndexPath
+//    ) {
+//        let cell = collection.dequeueReusableCell(
+//            withReuseIdentifier: "HomeCell",
+//            for: indexPath
+//        ) as! HomeCell
+//        cell.onTapToDetails = { controller in
+//            self.navigationController?.pushViewController(controller, animated: true)
+//        }
+//    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collection.bounds.width
